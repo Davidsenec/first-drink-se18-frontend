@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import TextInput from "@/components/ui/TextInput";
 
 export default function RegisterPage() {
     const [selected, setSelected] = useState("");
@@ -11,41 +12,17 @@ export default function RegisterPage() {
             <h1 className="mb-6 text-5xl font-bold text-center">⚽ REGISTER</h1>
 
             <div className="flex flex-col gap-6">
-                <label>Username</label>
-                <input
-                type="text"
-                className="w-full rounded-2xl focus:outline-none border p-3"
-                />
+                <TextInput label="Username" placeholder="Example: 69011xx, Big D"/>
+                
+                <TextInput label="Password" type="password"/>
 
-                <label>Password</label>
-                <input
-                type="password"
-                className="rounded border p-3"
-                />
+                <TextInput label="Confirm Password" type="password"/>
 
-                <label>Confirm Password</label>
-                <input
-                type="password"
-                className="rounded border p-3"
-                />
+                <TextInput label="Full name"/>
 
-                <label>Full name</label>
-                <input
-                type="text"
-                className="rounded border p-3"
-                />
+                <TextInput label="Nickname"/>
 
-                <label>Nickname</label>
-                <input
-                type="text"
-                className="rounded border p-3"
-                />
-
-                <label>Contact info</label>
-                <input
-                type="text"
-                className="rounded border p-3"
-                />
+                <TextInput label="Contact info" placeholder="Phone number, Line ID, etc."/>
 
                 <p>How are you going home?</p>
                 <label><input type="radio" name="source" value="parents" onChange={(e) => setSelected(e.target.value)} className="rounded border p-3"/> Parents</label>
