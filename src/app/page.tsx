@@ -4,22 +4,23 @@ export default function Home() {
   const box_sizing = "py-3 w-72 px-4 mt-2 rounded";
   const inputField = "focus:outline-none focus:ring-0 focus:border-transparent"
   const inputBg = "bg-[#1c1f2e]";
+  
   return (
     <div className="flex flex-col min-h-screen items-center justify-center font-mono">
 
       {/* Header */}
       <div className="flex flex-col text-center">
-        <div className="text-3xl">⚽</div>
-        <div className="text-[#5b6c82] text-[14px]">
+        <p className="text-3xl">⚽</p>
+        <p className="text-[#5b6c82] text-[14px]">
           First Drink
-        </div>
-        <div className={`${yellowText} text-[16px]`}>
+        </p>
+        <p className={`${yellowText} text-[16px]`}>
           <strong>Software Engineering</strong>
-        </div>
+        </p>
       </div>
 
       {/* Login Text */}
-      <div className="mt-8 mb-4 text-[40px]"> <strong>Login</strong> </div>
+      <div className="mt-8 mb-4 text-[40px]"><strong>Login</strong></div>
 
       {/* Username Input */}
       <input
