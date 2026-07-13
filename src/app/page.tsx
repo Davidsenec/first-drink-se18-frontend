@@ -1,9 +1,10 @@
+'use client'
+import Button from "@/components/ui/Button";
+import TextInputNLB from "@/components/ui/TextInputNLB";
+
 export default function Home() {
-  const yellowText = "text-[#f0990d]";
+  const emeraldText = "text-emerald-400";
   const grayText = "text-[#5b6c82]";
-  const box_sizing = "py-3 w-72 px-4 mt-2 rounded";
-  const inputField = "focus:outline-none focus:ring-0 focus:border-transparent"
-  const inputBg = "bg-[#1c1f2e]";
   
   return (
     <div className="flex flex-col min-h-screen items-center justify-center font-mono">
@@ -11,50 +12,34 @@ export default function Home() {
       {/* Header */}
       <div className="flex flex-col text-center">
         <p className="text-3xl">⚽</p>
-        <p className="text-[#5b6c82] text-[14px]">
-          First Drink
-        </p>
-        <p className={`${yellowText} text-[16px]`}>
+        <p className="text-[#5b6c82] text-[14px]">First Drink</p>
+        <p className={`${emeraldText} text-[16px]`}>
           <strong>Software Engineering</strong>
         </p>
       </div>
 
       {/* Login Text */}
-      <div className="mt-8 mb-4 text-[40px]"><strong>Login</strong></div>
+      <h1 className="mt-8 mb-4 text-[40px]"><strong>Login</strong></h1>
 
-      {/* Username Input */}
-      <input
-        type="text"
-        placeholder="Username"
-        className={`${inputBg} ${box_sizing} ${inputField}`}
-      />
+      {/* login fields */}
+      <div className="flex flex-col gap-2">
+        
+        <TextInputNLB placeholder="Username"/>
 
-      {/* Password Input */}
-      <input
-        type="password"
-        placeholder="Password"
-        className={`${inputBg} ${box_sizing} ${inputField}`}
-      />
+        <TextInputNLB type="password" placeholder="Password"/>
 
-      {/* Login Button */}
-      <button className=
-        {`bg-[#f0990d]
-          hover:bg-[#de8d0b]
-          text-[#0b0b0f]
-          font-bold
-          ${box_sizing}`}
-      >
-        Login
-      </button>
-
-      {/* Register page link text */}
-      <div className={`${grayText} font-sans mt-2`}>
-        New here? <a href="register" className={`${yellowText}`}>Sign up here</a>
+        <Button children="Login"/>
+  
       </div>
 
-      <div className={`${yellowText}`}><a href="edit-info">Edit Info page Test</a></div>
-      <div className={`${yellowText}`}><a href="admin">Admin page Test</a></div>
-      <div className={`${yellowText}`}><a href="info">Info page Test</a></div>
+      {/* Register page link text */}
+      <p className={`${grayText} font-sans mt-2`}>
+        New here? <a href="register" className={`${emeraldText}`}>Sign up here</a>
+      </p>
+
+      <a className={`${emeraldText}`} href="edit-info">Edit Info page Test</a>
+      <a className={`${emeraldText}`} href="admin">Admin page Test</a>
+      <a className={`${emeraldText}`} href="info">Info page Test</a>
 
     </div>
   );
