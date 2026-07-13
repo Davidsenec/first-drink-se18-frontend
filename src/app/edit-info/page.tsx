@@ -12,7 +12,7 @@ export default function EditInfoPage() {
         <div className="min-h-screen bg-black text-white px-6 py-8">
             <button className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
                 <span className="text-lg">←</span>
-                <span>Back</span>
+                <span><a href="../">Back</a></span>
             </button>
 
 

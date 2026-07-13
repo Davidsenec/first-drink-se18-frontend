@@ -51,6 +51,10 @@ export default function Home() {
         New here? <a href="register" className={`${yellowText}`}>Sign up here</a>
       </div>
 
+      <div className={`${yellowText}`}><a href="edit-info">Edit Info page Test</a></div>
+      <div className={`${yellowText}`}><a href="admin">Admin page Test</a></div>
+      <div className={`${yellowText}`}><a href="info">Info page Test</a></div>
+
     </div>
   );
 }
