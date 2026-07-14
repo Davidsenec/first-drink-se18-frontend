@@ -3,13 +3,14 @@
 import { useState } from "react";
 import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 export default function RegisterPage() {
     const [selected, setSelected] = useState("");
     return (
         <main className="min-h-screen bg-[#0B0B10] flex justify-center px-6 py-12">
         <div className="w-full max-w-xl p-8">
-            <a href="../"><button className="mb-3 text-gray-500 hover:text-white">&#8592; Back</button></a>
+            <Link href="../"><button className="mb-3 text-gray-500 hover:text-white">&#8592; Back</button></Link>
             <h1 className="mb-6 text-5xl font-bold text-center">⚽ REGISTER</h1>
 
             <div className="flex flex-col gap-6">

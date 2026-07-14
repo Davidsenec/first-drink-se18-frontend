@@ -3,6 +3,7 @@
 import { useState } from "react" ;
 import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 export default function EditInfoPage() {
     const [fullName, setFullName] = useState("");
@@ -15,7 +16,7 @@ export default function EditInfoPage() {
         <div className="min-h-screen bg-black text-white px-6 py-8">
             <button className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
                 <span className="text-lg">←</span>
-                <span>Back</span>
+                <span><Link href="../">Back</Link></span>
             </button>
 
 
