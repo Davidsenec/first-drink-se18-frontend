@@ -1,5 +1,8 @@
 "use client";
+
 import { useState } from "react" ;
+import TextInput from "@/components/ui/TextInput";
+import Button from "@/components/ui/Button";
 import Link from "next/link";
 
 export default function EditInfoPage() {
@@ -27,7 +30,7 @@ export default function EditInfoPage() {
             
 
             {/* Fullname */}
-            <div className="flex flex-col gap-7"></div>
+            {/* <div className="flex flex-col gap-7"></div>
                 <div>
                     <label className="block font-bold mb-2">Full name</label>
                     <input
@@ -36,7 +39,12 @@ export default function EditInfoPage() {
                         onChange={(e) => setFullName(e.target.value)}
                         className="w-full bg-[#1c1f2e] rounded-l px-4 py-4 outline-none focus:ring-2 focus:ring-yellow-500"
                     />
-                </div>
+                </div> */}
+            {/* <TextInput
+                label = "Fullname"
+                value = {fullName}
+                onChange = {setFullName}
+            /> */}
 
 
             {/* Nickname */}
