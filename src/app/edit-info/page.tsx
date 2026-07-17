@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react" ;
-import TextInput from "@/components/ui/TextInput";
-import Button from "@/components/ui/Button";
+import { useState } from "react";
+import TextInput from "@/components/ui/TextInputBM";
+import Button from "@/components/ui/ButtonBM";
+import RadioOption from "@/components/ui/RadioOption";
 import Link from "next/link";
 
 export default function EditInfoPage() {
@@ -12,119 +13,91 @@ export default function EditInfoPage() {
     const [goingHome, setGoingHome] = useState<"parents" | "other">("parents");
     const [address, setAddress] = useState("");
 
+    const handleConfirm = () => {
+        console.log({ fullName, Nickname, ContactInfo, goingHome, address });
+        // placeholder wait for backend
+    };
+
     return (
         <div className="min-h-screen bg-black text-white px-6 py-8">
-            <button className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                <span className="text-lg">←</span>
-                <span><Link href="../">Back</Link></span>
-            </button>
+            <div className="w-full max-w-md sm:max-w-lg md:max-w-xl mx-auto">
 
+                {/* Back button */}
+                <Link href="../" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                <span className="text-lg"> ← </span>
+                <span>Back</span>
+                </Link>
 
-            {/* Header */}
-            <div className="flex items-center gap-3 mt-8 mb-10">
-                <span className="text-3xl">⚽</span>
-                <h1 className="text-5xl font-black bold tracking-tight">
-                    EDIT INFO
-                </h1>
-            </div>
-            
+                {/* Header */}
+                <div className="flex items-center gap-4 mt-8 mb-10">
+                    <span className="text-3xl">⚽</span>
+                    <h1 className="text-5xl font-black tracking-tight">EDIT INFO</h1>
+                </div>
 
-            {/* Fullname */}
-            {/* <div className="flex flex-col gap-7"></div>
-                <div>
-                    <label className="block font-bold mb-2">Full name</label>
-                    <input
-                        type="text"
+                <div className="flex flex-col gap-4 mt-4">
+
+                    {/* Fullname */}
+                    <TextInput
+                        label="Fullname"
                         value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                        className="w-full bg-[#1c1f2e] rounded-l px-4 py-4 outline-none focus:ring-2 focus:ring-yellow-500"
+                        onChange={setFullName}
                     />
-                </div> */}
-            {/* <TextInput
-                label = "Fullname"
-                value = {fullName}
-                onChange = {setFullName}
-            /> */}
 
-
-            {/* Nickname */}
-            <div className="flex flex-col gap-7"></div>
-                <div>
-                    <label className="block font-bold mb-2">Nickname</label>
-                    <input
-                        type="text"
+                    {/* Nickname */}
+                    <TextInput
+                        label="Nickname"
                         value={Nickname}
-                        onChange={(e) => setNickName(e.target.value)}
-                        className="w-full bg-[#1c1f2e] rounded-l px-4 py-4 outline-none focus:ring-2 focus:ring-yellow-500"
+                        onChange={setNickName}
                     />
-                </div>
 
-
-            {/* Contact info */}
-            <div className= "flex f;ex-col gap-7"></div>
-                <div>
-                    <label className="block font-bold mb-2">Contact info</label>
-                    <input
-                        type="text"
+                    {/* Contact info */}
+                    <TextInput
+                        label="Contact Info"
                         value={ContactInfo}
-                        onChange={(e) => setContactInfo(e.target.value)}
-                        className="w-full bg-[#1c1f2e] rounded-l px-4 py-4 outline-none focus:ring-2 focus:ring-yellow-500"
+                        onChange={setContactInfo}
                     />
                 </div>
 
-
-            {/* Going home */}
-            <div className="flex flex-col gap-1">
+                {/* Going home */}
+                <div className="flex flex-col gap-1 mt-6">
                 <label className="block font-bold mb-3">
                     How are you going home?
                 </label>
 
                 <div>
-                    <label className="flex items-center gap-3 cursor-pointer">
-                    <input
-                        type="radio"
-                        name="goingHome"
-                        checked={goingHome === "parents"}
-                        onChange={() => setGoingHome("parents")}
-                        className="appearance-none w-6 h-6 rounded-full border-2 border-gray-500 checked:bg-yellow-500 checked:ring-4 checked:ring-inset checked:ring-black relative cursor-pointer"
-                    />
-                    <span>Parents</span>
-                    </label>
+                    <div className="flex flex-col gap-3 mt-1">
+                        <RadioOption
+                            label="Parents"
+                            checked={goingHome === "parents"}
+                            onChange={() => setGoingHome("parents")}
+                        />
 
-                    <label className="flex items-center gap-3 cursor-pointer">
-                        <input
-                            type="radio"
-                            name="goingHome"
+                        <RadioOption
+                            label="Other (Please include address incase of emergency)"
                             checked={goingHome === "other"}
                             onChange={() => setGoingHome("other")}
-                            className="appearance-none w-6 h-6 rounded-full border-2 border-gray-500 checked:bg-yellow-500 checked:ring-4 checked:ring-inset checked:ring-black relative cursor-pointer"
                         />
-                    <span>Other (Please include address incase of emergency)</span>
-                    </label>
-                    
-                    {/* Conditional address */}
-                    {goingHome === "other" && (
-                    <input
-                        type="text"
-                        placeholder="Emergency address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        className="w-full bg-[#1c1f2e] rounded-xl px-4 py-4 outline-none focus:ring-2 focus:ring-yellow-500 ml-9"
-                    />
-                    )}
+                        </div>
 
+                    {/* Conditional address */}
+                        <div className="flex flex-col mt-2">
+                        {goingHome === "other" && (
+                            <TextInput
+                            label=""
+                            value={address}
+                            onChange={setAddress}
+                            placeholder="Emergency address"
+                            />
+                        )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Confirm button */}
+                <div className="mt-1">
+                    <Button onClick={handleConfirm}>CONFIRM</Button>
                 </div>
             </div>
-
-            {/* Confirm button */}
-            <button
-                // onClick={variable}
-                // connec to back
-                className="flex items-center justify-center bg-yellow-500 hover:bg-yellow-400 transition-colors text-black font-extrabold text-lg rounded-2xl py-4 mt-4"
-            >
-            CONFIRM
-            </button>
-
         </div>
     );
 }
