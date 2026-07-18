@@ -8,9 +8,9 @@ import Link from "next/link";
 export default function RegisterPage() {
     const [selected, setSelected] = useState("");
     return (
-        <main className="min-h-screen bg-[#0B0B10] flex justify-center px-6 py-12">
-        <div className="w-full max-w-xl p-8">
-            <Link href="../"><button className="mb-3 text-gray-500 hover:text-white">&#8592; Back</button></Link>
+        <main className="flex justify-center px-6 py-12">
+        <div className="w-full max-w-xl p-4">
+            <Link href="../"><button className="mb-3 text-gray-500 hover:text-white ">&#8592; Back</button></Link>
             <h1 className="mb-6 text-5xl font-bold text-center">⚽ REGISTER</h1>
 
             <div className="flex flex-col gap-6">
@@ -34,7 +34,7 @@ export default function RegisterPage() {
                 {selected === "other" && (
                     <TextInput label ="" placeholder="Please describe how and provide emergency contact info/address"/>
                 )}
-                <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the rules</label>
+                <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the<Link href="" className="underline text-emerald-500">rules</Link></label>
                 <Button>REGISTER</Button>
             </div>
         </div>

@@ -19,7 +19,7 @@ export default function EditInfoPage() {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white px-6 py-8">
+        <div className="min-h-screen text-white px-6 py-8">
             <div className="w-full max-w-md sm:max-w-lg md:max-w-xl mx-auto">
 
                 {/* Back button */}
