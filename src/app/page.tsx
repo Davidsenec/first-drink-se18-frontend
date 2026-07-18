@@ -1,11 +1,35 @@
 'use client'
-import Button from "@/components/ui/Button";
-import TextInputNLB from "@/components/ui/TextInputNLB";
+
+import { useState } from "react";
+import { useRouter } from 'next/navigation'
 import Link from "next/link";
+
+import Button from "@/components/ui/ButtonBM";
+import TextInput from "@/components/ui/TextInputNLBBM";
+
 
 export default function Home() {
   const emeraldText = "text-emerald-400";
   const grayText = "text-[#5b6c82]";
+
+  const router = useRouter();
+  const [username, setUsernameValue] = useState("");
+  const [password, setPasswordValue] = useState("");
+  const [text, setText] = useState('');
+
+  const handleLoginButton = (): void => {
+
+    // simple test
+    if (username == "" || password == "") {
+      setText("Please input your Username and Password");
+    } else if (username != "admin" && password != "admin") {
+      setText("Invalid Username or Password please try again");
+    } else if (username == "admin" && password == "admin") {
+      setText('');
+      router.push('/admin')
+    }
+
+  };
   
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center px-4 py-8">
@@ -26,11 +50,25 @@ export default function Home() {
         {/* login fields */}
         <div className="flex flex-col gap-2 w-full">
           
-          <TextInputNLB placeholder="Username"/>
+          <TextInput 
+            value={username}
+            onChange={setUsernameValue}
+            placeholder="Username"/>
 
-          <TextInputNLB type="password" placeholder="Password"/>
+          <TextInput
+            type="password"
+            value={password}
+            onChange={setPasswordValue}
+            placeholder="Password"/>
 
-          <Button children="Login"/>
+          {text && (
+            <span className="text-red-400 text-center text-[14px]">{text}</span>
+          )}
+
+          <Button
+            children="Login"
+            onClick={handleLoginButton}
+          />
     
         </div>
 
@@ -39,7 +77,6 @@ export default function Home() {
           New here? <Link href="/register" className={`${emeraldText}`}>Sign up here</Link>
         </p>
         <Link className={`${emeraldText}`} href="/edit-info">Edit Info page Test</Link>
-        <Link className={`${emeraldText}`} href="/admin">Admin page Test</Link>
         <Link className={`${emeraldText}`} href="/info">Info page Test</Link>
 
       </div>
