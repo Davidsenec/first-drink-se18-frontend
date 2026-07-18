@@ -34,7 +34,7 @@ export default function RegisterPage() {
                 {selected === "other" && (
                     <TextInput label ="" placeholder="Please describe how and provide emergency contact info/address"/>
                 )}
-                <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the rules</label>
+                <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the<Link href="" className="underline text-emerald-500">rules</Link></label>
                 <Button>REGISTER</Button>
             </div>
         </div>
