@@ -10,11 +10,22 @@ export default function EditInfoPage() {
     const [fullName, setFullName] = useState("");
     const [Nickname, setNickName] = useState("");
     const [ContactInfo, setContactInfo] = useState("");
-    const [goingHome, setGoingHome] = useState<"parents" | "other">("parents");
-    const [address, setAddress] = useState("");
+    const [selectedOption, setSelectedOption] = useState<"parents" | "other">("parents");
+    const [addressText, setAddressText] = useState("")
+
+    let address;
+    if (selectedOption === "parents") {
+        address = "parents";
+    } else {
+        address = addressText;
+    }
 
     const handleConfirm = () => {
-        console.log({ fullName, Nickname, ContactInfo, goingHome, address });
+        if (selectedOption === "other" && addressText.trim() === "") {
+            alert("Please enter address!!!");
+            return;
+        } 
+        console.log({ fullName, Nickname, ContactInfo, address });
         // placeholder wait for backend
     };
 
@@ -68,24 +79,24 @@ export default function EditInfoPage() {
                     <div className="flex flex-col gap-3 mt-1">
                         <RadioOption
                             label="Parents"
-                            checked={goingHome === "parents"}
-                            onChange={() => setGoingHome("parents")}
+                            checked={selectedOption === "parents"}
+                            onChange={() => setSelectedOption("parents")}
                         />
 
                         <RadioOption
                             label="Other (Please include address incase of emergency)"
-                            checked={goingHome === "other"}
-                            onChange={() => setGoingHome("other")}
+                            checked={selectedOption === "other"}
+                            onChange={() => setSelectedOption("other")}
                         />
                         </div>
 
                     {/* Conditional address */}
                         <div className="flex flex-col mt-2">
-                        {goingHome === "other" && (
+                        {selectedOption === "other" && (
                             <TextInput
                             label=""
-                            value={address}
-                            onChange={setAddress}
+                            value={addressText}
+                            onChange={setAddressText}
                             placeholder="Emergency address"
                             />
                         )}
