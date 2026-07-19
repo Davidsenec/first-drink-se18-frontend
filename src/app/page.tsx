@@ -27,6 +27,9 @@ export default function Home() {
     } else if (username == "admin" && password == "admin") {
       setText('');
       router.push('/admin')
+    } else if (username == "user" && password == "user") {
+      setText('');
+      router.push('/info')
     }
 
   };
@@ -76,8 +79,6 @@ export default function Home() {
         <p className={`${grayText} font-sans mt-2`}>
           New here? <Link href="/register" className={`${emeraldText}`}>Sign up here</Link>
         </p>
-        <Link className={`${emeraldText}`} href="/edit-info">Edit Info page Test</Link>
-        <Link className={`${emeraldText}`} href="/info">Info page Test</Link>
 
       </div>
     </main>
