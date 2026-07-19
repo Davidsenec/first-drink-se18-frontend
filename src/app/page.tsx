@@ -7,6 +7,10 @@ import Link from "next/link";
 import Button from "@/components/ui/ButtonBM";
 import TextInput from "@/components/ui/TextInputNLBBM";
 
+import { UserLogin } from "./types/user";
+import { loginUser } from "./lib/api";
+import { info } from "console";
+
 
 export default function Home() {
   const emeraldText = "text-emerald-400";
@@ -17,19 +21,18 @@ export default function Home() {
   const [password, setPasswordValue] = useState("");
   const [text, setText] = useState('');
 
-  const handleLoginButton = (): void => {
+  async function handleLoginButton() {
 
-    // simple test
-    if (username == "" || password == "") {
-      setText("Please input your Username and Password");
-    } else if (username != "admin" && password != "admin") {
-      setText("Invalid Username or Password please try again");
-    } else if (username == "admin" && password == "admin") {
-      setText('');
-      router.push('/admin')
-    } else if (username == "user" && password == "user") {
-      setText('');
-      router.push('/info')
+    try {
+      const user = await loginUser({user_name: username, password: password});
+      setText("");
+      router.push("/info");
+    } catch (err) {
+      if (err instanceof Error) {
+        setText(err.message);
+      } else {
+        setText("Something went wrong");
+      }
     }
 
   };

@@ -1,18 +1,20 @@
 [
   {
-    "id": 69011560,
+    "id": 123456,
     "user_name": "janedoe",
+    "password": "thisisjanedoe",
     "full_name": "Jane Doe",
     "nick_name": "Jane",
     "contact_info": "123456789",
     "address": "123 Main St"
   },
   {
-    "id": 68011560,
-    "user_name": "alexchen",
-    "full_name": "Alex Chen",
-    "nick_name": "Al",
-    "contact_info": "tunerxd",
-    "address": "456 Oak Ave"
+    "id": 654321,
+    "user_name": "johndoe",
+    "password": "thisisjohndoe",
+    "full_name": "John Doe",
+    "nick_name": "John",
+    "contact_info": "987654321",
+    "address": "456 Sub St"
   }
 ]
