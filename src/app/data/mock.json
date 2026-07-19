@@ -1,0 +1,18 @@
+[
+  {
+    "id": 69011560,
+    "user_name": "janedoe",
+    "full_name": "Jane Doe",
+    "nick_name": "Jane",
+    "contact_info": "123456789",
+    "address": "123 Main St"
+  },
+  {
+    "id": 68011560,
+    "user_name": "alexchen",
+    "full_name": "Alex Chen",
+    "nick_name": "Al",
+    "contact_info": "tunerxd",
+    "address": "456 Oak Ave"
+  }
+]
