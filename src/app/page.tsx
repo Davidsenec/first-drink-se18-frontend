@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from "next/link";
 
 import Button from "@/components/ui/Button";
-import TextInput from "@/components/ui/TextInputNLBBM";
+import TextInput from "@/components/ui/TextInput";
 
 import { UserLogin } from "./types/user";
 import { loginUser } from "./lib/api";
@@ -57,11 +57,13 @@ export default function Home() {
         <div className="flex flex-col gap-2 w-full">
           
           <TextInput 
+            label=""
             value={username}
             onChange={setUsernameValue}
             placeholder="Username"/>
 
           <TextInput
+            label=""
             type="password"
             value={password}
             onChange={setPasswordValue}
