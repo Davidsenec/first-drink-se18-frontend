@@ -17,7 +17,9 @@ export default function InfoPage() {
     return (
         <main className="flex justify-center px-3 py-6">
             <div className="flex flex-col w-full max-w-xl px-4 py-8 gap-3">
-                <Link href="../"><button className="mb-3 text-gray-500 hover:text-white" onClick={handleLogout}>Logout</button></Link>
+                <div>
+                    <button className="mb-3 text-gray-500 hover:text-white items-start" onClick={handleLogout}>Logout</button>
+                </div>
                 <h1 className="mb-6 text-5xl font-bold">Welcome, user</h1>
                 <div className="bg-amber-100 rounded-2xl text-black text-center px-20 py-20">Image</div>
                 <label className="text-center text-gray-500 text-sm">SCREENSHOT TO SAVE</label>
