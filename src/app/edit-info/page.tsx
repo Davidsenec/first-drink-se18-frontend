@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import TextInput from "@/components/ui/TextInputBM";
-import Button from "@/components/ui/ButtonBM";
+import Button from "@/components/ui/Button";
 import RadioOption from "@/components/ui/RadioOption";
 import Link from "next/link";
 
