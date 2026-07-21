@@ -1,50 +1,61 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
-    const [data, setData] = useState(null);
+    const [selected, setSelectedOption] = useState("");
+    const [loading, setLoading] = useState(true);
     const [errorMessage, setError] = useState("");
-    const [username, setUsername] = useState("");
+    const [user_name, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [nickName, setNickName] = useState("");
+    const [full_name, setFullName] = useState("");
+    const [nick_name, setNickName] = useState("");
     const [contact_info, setContactInfo] = useState("");
-    const [address, setAddress] = useState("");
+    const [address, setAddress] = useState("parent");
+    const router = useRouter();
 
-    useEffect(() => {
-        // async function fetchRegister() {
+    
+    async function fetchRegister() {
 
-        //     const controller = new AbortController();
+        if (!user_name || !password || !full_name || !nick_name || !contact_info || !address) {
+            setError("Please fill in all fields");
+            return;
+        }
 
-        //     try {
-        //         const response = await fetch("http://127.0.0.1:8000/register", {
-        //             signal: controller.signal
-        //         });
+        if (password != confirmPassword) {
+            setError("Password doesn't match");
+            return;
+        }
 
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
+        setLoading(true);
+        try {
+            const response = await fetch("http://127.0.0.1:8000/register", {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_name, password, full_name, nick_name, contact_info, address}),
+            });
 
-        //         const json = await response.json();
-        //         setData(json);
-        //     } catch (err) {
-        //         if (err instanceof Error) {
-        //             setError(err.message)
-        //         } else {
-        //             setError("Something went wrong, please try again.")
-        //         }
-        //     }
-        // }
-    })
+            const data = await response.json();
 
-
-
-
+            if (!response.ok) {
+                throw new Error(data.message || data.error || 'Registration failed');
+            }
+            router.push("../")
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError("Something went wrong, please try again.")
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <main className="flex justify-center px-6 py-12">
@@ -56,7 +67,7 @@ export default function RegisterPage() {
                 <TextInput
                     label="Username"
                     placeholder="Example: 69011xx, Big D"
-                    value={username}
+                    value={user_name}
                     onChange={setUsername}
                 />
                 
@@ -76,13 +87,13 @@ export default function RegisterPage() {
 
                 <TextInput
                     label="Full name"
-                    value={fullName}
+                    value={full_name}
                     onChange={setFullName}
                 />
 
                 <TextInput
                     label="Nickname"
-                    value={nickName}
+                    value={nick_name}
                     onChange={setNickName}
                 />
 
@@ -95,10 +106,10 @@ export default function RegisterPage() {
 
                 <p>How are you going home?</p>
                 <label><input type="radio" name="source" value="parents" 
-                onChange={(e) => setAddress(e.target.value)} className="rounded border p-3"/> Parents</label>
+                onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Parents</label>
                 <label><input type="radio" name="source" value="other" 
-                onChange={(e) => setAddress(e.target.value)} className="rounded border p-3"/> Other</label>
-                {address === "other" && (
+                onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Other</label>
+                {selected == "other" && (
                     <TextInput
                         label =""
                         placeholder="Please describe how and provide emergency contact info/address"
@@ -107,7 +118,20 @@ export default function RegisterPage() {
                     />
                 )}
                 <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the<Link href="" className="underline text-emerald-500">rules</Link></label>
-                <Button>REGISTER</Button>
+                        {errorMessage && (
+                    <span className="text-red-400 text-center text-[14px]">{errorMessage}</span>
+                )}
+                <Button
+                    children="Register"
+                    onClick={fetchRegister}
+                />
+
+                <p>{user_name}</p>
+                <p>{password}</p>
+                <p>{full_name}</p>
+                <p>{nick_name}</p>
+                <p>{contact_info}</p>
+                <p>{address}</p>
             </div>
         </div>
         </main>
