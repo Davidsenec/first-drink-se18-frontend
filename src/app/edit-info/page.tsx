@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import TextInput from "@/components/ui/TextInputBM";
+import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
 import RadioOption from "@/components/ui/RadioOption";
 import Link from "next/link";
