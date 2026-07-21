@@ -1,15 +1,12 @@
 'use client'
 
-import { useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import { jwtDecode } from "jwt-decode";
 
 import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInput";
-
-import { UserLogin } from "./types/user";
-import { loginUser } from "./lib/api";
-import { info } from "console";
 
 
 export default function Home() {
@@ -17,25 +14,68 @@ export default function Home() {
   const grayText = "text-[#5b6c82]";
 
   const router = useRouter();
-  const [username, setUsernameValue] = useState("");
-  const [password, setPasswordValue] = useState("");
-  const [text, setText] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  async function handleLoginButton() {
-
-    try {
-      const user = await loginUser({user_name: username, password: password});
-      setText("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin) { 
+      router.push("/admin");
+    } else if (token) { 
       router.push("/info");
-    } catch (err) {
-      if (err instanceof Error) {
-        setText(err.message);
-      } else {
-        setText("Something went wrong");
-      }
     }
+  }, [router]);
 
-  };
+
+  function persistTokenAndGoHome(access_token: string) {
+    const decoded: any = jwtDecode(access_token);
+    const isAdmin = decoded.role;
+    localStorage.setItem("sub", decoded.sub);
+    localStorage.setItem("token", access_token);
+    localStorage.setItem("isAdmin", isAdmin);
+    if (isAdmin) { 
+      router.push("/admin");
+    } else {
+      router.push("/info");
+    }
+  }
+
+
+  async function fetchLogin() {
+
+        if (!username || !password) {
+            setError("Please fill in all fields");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await fetch("http://127.0.0.1:8000/login", {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({grant_type: "password",username, password}),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || data.error || 'Invalid Username or Password');
+            }
+
+            persistTokenAndGoHome(data.access_token);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError("Something went wrong, please try again.")
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
   
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center px-4 py-8">
@@ -59,23 +99,23 @@ export default function Home() {
           <TextInput 
             label=""
             value={username}
-            onChange={setUsernameValue}
+            onChange={setUsername}
             placeholder="Username"/>
 
           <TextInput
             label=""
             type="password"
             value={password}
-            onChange={setPasswordValue}
+            onChange={setPassword}
             placeholder="Password"/>
 
-          {text && (
-            <span className="text-red-400 text-center text-[14px]">{text}</span>
+          {error && (
+            <span className="text-red-400 text-center text-[14px]">{error}</span>
           )}
 
           <Button
             children="Login"
-            onClick={handleLoginButton}
+            onClick={fetchLogin}
           />
     
         </div>
