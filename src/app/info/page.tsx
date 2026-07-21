@@ -1,11 +1,23 @@
+'use client'
+
 import Link from "next/link";
 import Button from "@/components/ui/Button"
 
+import { useRouter } from 'next/navigation';
+
 export default function InfoPage() {
+
+    const router = useRouter();
+    const handleLogout = () => {
+        localStorage.clear();   
+        router.push("../");
+    }
+
+
     return (
         <main className="flex justify-center px-3 py-6">
             <div className="flex flex-col w-full max-w-xl px-4 py-8 gap-3">
-                <Link href="../"><button className="mb-3 text-gray-500 hover:text-white ">&#8592; Back</button></Link>
+                <Link href="../"><button className="mb-3 text-gray-500 hover:text-white" onClick={handleLogout}>Logout</button></Link>
                 <h1 className="mb-6 text-5xl font-bold">Welcome, user</h1>
                 <div className="bg-amber-100 rounded-2xl text-black text-center px-20 py-20">Image</div>
                 <label className="text-center text-gray-500 text-sm">SCREENSHOT TO SAVE</label>
