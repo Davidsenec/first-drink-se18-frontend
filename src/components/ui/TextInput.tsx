@@ -1,11 +1,15 @@
 type TextInputProps = {
   label: string;
+  value: string;
+  onChange: (value: string) => void;
   type?: string;
   placeholder?: string;
 };
 
 export default function TextInput({
   label,
+  value,
+  onChange,
   type = "text",
   placeholder,
 }: TextInputProps) {
@@ -15,6 +19,8 @@ export default function TextInput({
 
       <input
         type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className="
           w-full
@@ -25,7 +31,6 @@ export default function TextInput({
           text-white
           focus:outline-none
         "
-
       />
     </div>
   );

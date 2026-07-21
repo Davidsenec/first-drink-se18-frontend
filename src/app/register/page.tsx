@@ -10,6 +10,7 @@ export default function RegisterPage() {
     const [errorMessage, setError] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [fullName, setFullName] = useState("");
     const [nickName, setNickName] = useState("");
     const [contact_info, setContactInfo] = useState("");
@@ -52,17 +53,45 @@ export default function RegisterPage() {
             <h1 className="mb-6 text-5xl font-bold text-center">⚽ REGISTER</h1>
 
             <div className="flex flex-col gap-6">
-                <TextInput label="Username" placeholder="Example: 69011xx, Big D"/>
+                <TextInput
+                    label="Username"
+                    placeholder="Example: 69011xx, Big D"
+                    value={username}
+                    onChange={setUsername}
+                />
                 
-                <TextInput label="Password" type="password"/>
+                <TextInput
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={setPassword}
+                />
 
-                <TextInput label="Confirm Password" type="password"/>
+                <TextInput
+                    label="Confirm Password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={setConfirmPassword}
+                />
 
-                <TextInput label="Full name"/>
+                <TextInput
+                    label="Full name"
+                    value={fullName}
+                    onChange={setFullName}
+                />
 
-                <TextInput label="Nickname"/>
+                <TextInput
+                    label="Nickname"
+                    value={nickName}
+                    onChange={setNickName}
+                />
 
-                <TextInput label="Contact info" placeholder="Phone number, Line ID, etc."/>
+                <TextInput
+                    label="Contact info"
+                    placeholder="Phone number, Line ID, etc."
+                    value={contact_info}
+                    onChange={setContactInfo}
+                />
 
                 <p>How are you going home?</p>
                 <label><input type="radio" name="source" value="parents" 
@@ -70,7 +99,12 @@ export default function RegisterPage() {
                 <label><input type="radio" name="source" value="other" 
                 onChange={(e) => setAddress(e.target.value)} className="rounded border p-3"/> Other</label>
                 {address === "other" && (
-                    <TextInput label ="" placeholder="Please describe how and provide emergency contact info/address"/>
+                    <TextInput
+                        label =""
+                        placeholder="Please describe how and provide emergency contact info/address"
+                        value={address}
+                        onChange={setAddress}
+                    />
                 )}
                 <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the<Link href="" className="underline text-emerald-500">rules</Link></label>
                 <Button>REGISTER</Button>
