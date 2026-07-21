@@ -1,12 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
 
 export default function RegisterPage() {
-    const [selected, setSelected] = useState("");
+    const [data, setData] = useState(null);
+    const [errorMessage, setError] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [nickName, setNickName] = useState("");
+    const [contact_info, setContactInfo] = useState("");
+    const [address, setAddress] = useState("");
+
+    useEffect(() => {
+        // async function fetchRegister() {
+
+        //     const controller = new AbortController();
+
+        //     try {
+        //         const response = await fetch("http://127.0.0.1:8000/register", {
+        //             signal: controller.signal
+        //         });
+
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+
+        //         const json = await response.json();
+        //         setData(json);
+        //     } catch (err) {
+        //         if (err instanceof Error) {
+        //             setError(err.message)
+        //         } else {
+        //             setError("Something went wrong, please try again.")
+        //         }
+        //     }
+        // }
+    })
+
+
+
+
+
     return (
         <main className="flex justify-center px-6 py-12">
         <div className="w-full max-w-xl p-4">
@@ -28,10 +66,10 @@ export default function RegisterPage() {
 
                 <p>How are you going home?</p>
                 <label><input type="radio" name="source" value="parents" 
-                onChange={(e) => setSelected(e.target.value)} className="rounded border p-3"/> Parents</label>
+                onChange={(e) => setAddress(e.target.value)} className="rounded border p-3"/> Parents</label>
                 <label><input type="radio" name="source" value="other" 
-                onChange={(e) => setSelected(e.target.value)} className="rounded border p-3"/> Other</label>
-                {selected === "other" && (
+                onChange={(e) => setAddress(e.target.value)} className="rounded border p-3"/> Other</label>
+                {address === "other" && (
                     <TextInput label ="" placeholder="Please describe how and provide emergency contact info/address"/>
                 )}
                 <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the<Link href="" className="underline text-emerald-500">rules</Link></label>

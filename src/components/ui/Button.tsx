@@ -1,12 +1,15 @@
 type ButtonProps = {
   children: React.ReactNode;
+  onClick?: () => void;
 };
 
 export default function Button({
   children,
+  onClick
 }: ButtonProps) {
   return (
     <button
+    onClick={onClick}
       className="
         w-full
         rounded-xl
@@ -16,6 +19,7 @@ export default function Button({
         tracking-widest
         text-black
         hover:bg-emerald-500
+        mt-6
       "
     >
       {children}

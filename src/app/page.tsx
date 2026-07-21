@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
 
-import Button from "@/components/ui/ButtonBM";
+import Button from "@/components/ui/Button";
 import TextInput from "@/components/ui/TextInputNLBBM";
 
 import { UserLogin } from "./types/user";
