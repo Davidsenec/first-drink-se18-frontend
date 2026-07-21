@@ -125,13 +125,6 @@ export default function RegisterPage() {
                     children="Register"
                     onClick={fetchRegister}
                 />
-
-                <p>{user_name}</p>
-                <p>{password}</p>
-                <p>{full_name}</p>
-                <p>{nick_name}</p>
-                <p>{contact_info}</p>
-                <p>{address}</p>
             </div>
         </div>
         </main>
