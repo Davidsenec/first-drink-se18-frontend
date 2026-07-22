@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Dropdown, {Option} from "@/components/ui/Dropdown";
+import { useRouter } from "next/navigation"
 
 // Mock types for now 
 enum UserStatus {
@@ -19,6 +20,14 @@ type User = {
 };
 
 export default function AdminPage() {
+
+    const router = useRouter();
+
+    const handleLogout = () => {
+        localStorage.clear();   
+        router.push("../");
+    }
+
     const [users, setUsers] = useState<User[]>([
         {
             id: 1,
@@ -69,7 +78,9 @@ export default function AdminPage() {
     return (
         <main className="flex justify-center px-3 py-6">
             <div className="flex flex-col w-full max-w-xl px-4 py-8 gap-3">
-                <Link href="../"><button className="mb-3 text-gray-500 hover:text-white ">&#8592; Back</button></Link>
+                <div className="align-start">
+                    <button className="mb-3 text-gray-500 hover:text-white" onClick={handleLogout}>Logout</button>
+                </div>
                 <h1 className="mb-6 text-5xl font-bold">ADMIN</h1>
                 <div className="mb-6">
                     <p>Total: <label className="italic">{total}</label></p>
