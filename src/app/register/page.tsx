@@ -117,9 +117,14 @@ export default function RegisterPage() {
                         onChange={setAddress}
                     />
                 )}
-                <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the<Link href="" className="underline text-emerald-500">rules</Link></label>
-                        {errorMessage && (
-                    <span className="text-red-400 text-center text-[14px]">{errorMessage}</span>
+
+                <label className="flex items-center gap-3">
+                    <input type="checkbox"/> I accept and understand the
+                    <Link href="" className="underline text-emerald-500">rules</Link>
+                </label>
+                
+                {errorMessage && (
+                <span className="text-red-400 text-center text-[14px]">{errorMessage}</span>
                 )}
                 <Button
                     children="Register"
