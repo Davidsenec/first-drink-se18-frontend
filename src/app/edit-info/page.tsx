@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
 import RadioOption from "@/components/ui/RadioOption";
@@ -11,7 +13,10 @@ export default function EditInfoPage() {
     const [Nickname, setNickName] = useState("");
     const [ContactInfo, setContactInfo] = useState("");
     const [selectedOption, setSelectedOption] = useState<"parents" | "other">("parents");
-    const [addressText, setAddressText] = useState("")
+    const [addressText, setAddressText] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [errorMessage, setError] = useState("");
+    const router = useRouter();
 
     let address;
     if (selectedOption === "parents") {
@@ -20,14 +25,101 @@ export default function EditInfoPage() {
         address = addressText;
     }
 
-    const handleConfirm = () => {
+    useEffect(() => {
+        async function fetchUser() {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+            router.push("../");
+            return;
+            }
+
+            try {
+            const response = await fetch("http://127.0.0.1:8000/users/me", {
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || data.error || "Failed to load info");
+            }
+
+            setFullName(data.full_name ?? "");
+            setNickName(data.nick_name ?? "");
+            setContactInfo(data.contact_info ?? "");
+
+            if (data.address === "parents") {
+                setSelectedOption("parents");
+                setAddressText("");
+            } else {
+                setSelectedOption("other");
+                setAddressText(data.address ?? "");
+            }
+
+            } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError("Something went wrong, please try again.");
+            }
+
+            } finally {
+            setLoading(false);
+            }
+        }
+        fetchUser();
+    }, [router]);
+
+
+    const handleConfirm = async () => {
         if (selectedOption === "other" && addressText.trim() === "") {
             alert("Please enter address!!!");
             return;
         } 
-        console.log({ fullName, Nickname, ContactInfo, address });
-        // placeholder wait for backend
+        setError("");
+        const token = localStorage.getItem("token");
+
+        try {
+        const response = await fetch("http://127.0.0.1:8000/users/edit_info", {
+                method: "PUT",
+                headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+                body: JSON.stringify({
+                full_name: fullName,
+                nick_name: Nickname,
+                contact_info: ContactInfo,
+                address,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || data.error || "Update failed");
+        }
+
+        router.push("../info");
+        } catch (err) {
+        if (err instanceof Error) {
+            setError(err.message);
+        } else {
+            setError("Something went wrong!!!, please try again.");
+        }
+        }
     };
+
+    if (loading) {
+        return(
+            <div className="min-h-screen text-white flex items-center justify-center">
+                loading...
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen text-white px-6 py-8">
@@ -103,6 +195,10 @@ export default function EditInfoPage() {
                         </div>
                     </div>
                 </div>
+
+                {errorMessage && (
+                    <p className="text-red-400 text-center text-[14px] mt-4">{errorMessage}</p>
+                )}
 
                 {/* Confirm button */}
                 <div className="mt-1">
