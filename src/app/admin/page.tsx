@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Dropdown, {Option} from "@/components/ui/Dropdown";
 import { useRouter } from "next/navigation"
@@ -14,40 +14,26 @@ enum UserStatus {
 
 type User = {
     id: number;
-    username: string;
-    nickname: string;
+    user_name: string;
+    nick_name: string;
     status: UserStatus;
 };
 
 export default function AdminPage() {
 
     const router = useRouter();
+    const [users, setUsers] = useState<User[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [errorMessage, setError] = useState("");
 
     const handleLogout = () => {
         localStorage.clear();   
         router.push("../");
     }
 
-    const [users, setUsers] = useState<User[]>([
-        {
-            id: 1,
-            username: "ceo_of_sex",
-            nickname: "David",
-            status: UserStatus.NotArrived,
-        },
-        {
-            id: 2,
-            username: "GayLord",
-            nickname: "Auto",
-            status: UserStatus.Present,
-        },
-        {
-            id: 3,
-            username: "LilD",
-            nickname: "Beam",
-            status: UserStatus.NotArrived,
-        },
-    ]);
+    const handleRefresh = () => {
+        router.refresh()
+    }
     
     function updateStatus(id: number, status: UserStatus) {
         setUsers(
@@ -75,11 +61,41 @@ export default function AdminPage() {
     const departed = users.filter(user => user.status === UserStatus.Departed).length;
     const notArrived = users.filter(user => user.status === UserStatus.NotArrived).length;
 
+    useEffect(() => {
+        async function fetchUserData() {    
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch('http://127.0.0.1:8000/admin/get_user', {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        }); 
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || data.error || 'Something wrong');
+            }
+
+            setUsers(data);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError("Something went wrong, please try again.")
+            }
+        } finally {
+            setIsLoading(false);
+        }
+        }
+        fetchUserData();
+    }, []);
+
     return (
         <main className="flex justify-center px-3 py-6">
             <div className="flex flex-col w-full max-w-xl px-4 py-8 gap-3">
                 <div className="align-start">
-                    <button className="mb-3 text-gray-500 hover:text-white" onClick={handleLogout}>Logout</button>
+                    <button className="mb-3 mr-5 text-gray-500 hover:text-white" onClick={handleLogout}>Logout</button>
+                    <button className="mb-3 text-gray-500 hover:text-white" onClick={() => router.refresh()}>refresh</button>
                 </div>
                 <h1 className="mb-6 text-5xl font-bold">ADMIN</h1>
                 <div className="mb-6">
@@ -101,11 +117,11 @@ export default function AdminPage() {
                     </thead>
 
                     <tbody className="text-center">
-                        {users.map((user, index) =>
+                        {users.map((user) =>
                             <tr key={user.id} className="border-b">
-                                <td className="p-2">{index + 1}</td>
-                                <td>{user.username}</td>
-                                <td>{user.nickname}</td>
+                                <td className="p-2">{user.id}</td>
+                                <td>{user.user_name}</td>
+                                <td>{user.nick_name}</td>
                                 <td className="p-2"><Dropdown value={user.status} onChange={(value) => updateStatus(user.id, value as UserStatus)} 
                                 options={options}></Dropdown></td>
                             </tr>
