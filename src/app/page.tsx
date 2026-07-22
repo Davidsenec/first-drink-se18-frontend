@@ -22,7 +22,7 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const isAdmin = localStorage.getItem("isAdmin");
-    if (isAdmin) { 
+    if (isAdmin == "true") { 
       router.push("/admin");
     } else if (token) { 
       router.push("/info");
@@ -30,13 +30,13 @@ export default function Home() {
   }, [router]);
 
 
-  function persistTokenAndGoHome(access_token: string) {
+  function persistTokenAndGoHome(access_token: string, is_admin: boolean) {
     const decoded: any = jwtDecode(access_token);
-    const isAdmin = decoded.role;
+    const isAdmin = JSON.stringify(is_admin)
+    localStorage.setItem("isAdmin", isAdmin);
     localStorage.setItem("sub", decoded.sub);
     localStorage.setItem("token", access_token);
-    localStorage.setItem("isAdmin", isAdmin);
-    if (isAdmin) { 
+    if (isAdmin == "true") { 
       router.push("/admin");
     } else {
       router.push("/info");
@@ -53,7 +53,7 @@ export default function Home() {
 
         setLoading(true);
         try {
-            const response = await fetch("http://127.0.0.1:8000/login", {
+            const response = await fetch("http://127.0.0.1:8000/auth/login", {
                 method: 'POST',
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({grant_type: "password",username, password}),
@@ -65,7 +65,7 @@ export default function Home() {
                 throw new Error(data.message || data.error || 'Invalid Username or Password');
             }
 
-            persistTokenAndGoHome(data.access_token);
+            persistTokenAndGoHome(data.access_token, data.is_admin);
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message)
