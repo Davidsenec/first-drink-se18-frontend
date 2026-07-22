@@ -1,7 +1,8 @@
 export enum UserStatus {
-    NotArrived = "Not arrived",
-    Present = "Present",
-    Departed = "Departed",
+    not_arrived = "not_arrived",
+    in_party = "in_party",
+    departed = "departed",
+
 }
 
 export type Option = {

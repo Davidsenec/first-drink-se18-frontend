@@ -27,6 +27,11 @@ export default function RegisterPage() {
             return;
         }
 
+        if (password.length < 6 || password.length >= 16) {
+            setError("Password must be more than 5 and less than 17 characters long");
+            return;
+        }
+
         if (password != confirmPassword) {
             setError("Password doesn't match");
             return;
@@ -99,7 +104,7 @@ export default function RegisterPage() {
 
                 <TextInput
                     label="Contact info"
-                    placeholder="Phone number, Line ID, etc."
+                    placeholder="Please specify Ex: LineID: davidishandsome842."
                     value={contact_info}
                     onChange={setContactInfo}
                 />
@@ -107,19 +112,26 @@ export default function RegisterPage() {
                 <p>How are you going home?</p>
                 <label><input type="radio" name="source" value="parents" 
                 onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Parents</label>
+                <label><input type="radio" name="source" value="senior" 
+                onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Senior</label>
                 <label><input type="radio" name="source" value="other" 
                 onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Other</label>
                 {selected == "other" && (
                     <TextInput
                         label =""
-                        placeholder="Please describe how and provide emergency contact info/address"
+                        placeholder="Please describe how"
                         value={address}
                         onChange={setAddress}
                     />
                 )}
-                <label className="flex items-center gap-3"><input type="checkbox" /> I accept and understand the<Link href="" className="underline text-emerald-500">rules</Link></label>
-                        {errorMessage && (
-                    <span className="text-red-400 text-center text-[14px]">{errorMessage}</span>
+
+                <label className="flex items-center gap-3">
+                    <input type="checkbox"/> I accept and understand the
+                    <Link href="" className="underline text-emerald-500">rules</Link>
+                </label>
+
+                {errorMessage && (
+                <span className="text-red-400 text-center text-[14px]">{errorMessage}</span>
                 )}
                 <Button
                     children="Register"
