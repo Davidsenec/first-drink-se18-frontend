@@ -2,17 +2,30 @@
 
 import Link from "next/link";
 import Button from "@/components/ui/Button"
+import Image from 'next/image'
+import sui from '../../assets/sui.jpg';
+
 
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
 
 export default function InfoPage() {
 
     const router = useRouter();
+    const [user_name, setUsername] = useState("");
+
     const handleLogout = () => {
         localStorage.clear();   
         router.push("../");
     }
 
+    useEffect(() => {
+        const userName = localStorage.getItem("sub")
+        if (localStorage.getItem("isAdmin") == "true") {
+            router.push("../admin");
+        }
+        setUsername(userName || "my Junior");
+    })
 
     return (
         <main className="flex justify-center px-3 py-6">
@@ -20,9 +33,13 @@ export default function InfoPage() {
                 <div>
                     <button className="mb-3 text-gray-500 hover:text-white items-start" onClick={handleLogout}>Logout</button>
                 </div>
-                <h1 className="mb-6 text-5xl font-bold">Welcome, user</h1>
-                <div className="bg-amber-100 rounded-2xl text-black text-center px-20 py-20">Image</div>
-                <label className="text-center text-gray-500 text-sm">SCREENSHOT TO SAVE</label>
+                <h1 className="mb-6 text-5xl font-bold">Welcome, {user_name}</h1>
+                <Image
+                    src={sui}
+                    alt="Picture of the author"
+                    placeholder="blur"
+                    className="rounded-2xl"
+                />
 
                 <div className="border-[#dcdce9] rounded-xl bg-[#1B1D2F] p-4">
                     <h1 className="text-xs font-bold text-emerald-600">EVENT INFO</h1>
@@ -32,26 +49,25 @@ export default function InfoPage() {
                     <br></br>
                     <hr className="text-gray-500 p-3"></hr>
                     <h1 className="text-xs font-bold text-emerald-600">CONTACT INFO</h1>
-                    <h2>Discord: <Link href="{https://discord.gg/N79Fp3hZZ}" className="text-blue-500 text-sm">https://discord.gg/N79Fp3hZZ</Link></h2>
-                    <h2>Instagram: </h2>
-                    <h2>Line: </h2>
+                    <h2>Discord: <Link href="https://discord.gg/N79Fp3hZZ" className="text-blue-500 text-sm">Click here!</Link></h2>
+                    <h2>Instagram: <Link href="https://www.instagram.com/se_kmitl?igsh=MWFuMW85MmVpMXBmag==" className="text-blue-500 text-sm">Click here!</Link> </h2>
+                    <h2>Outfit: Wear <strong>Football Jersey</strong> or any <strong>Jersey</strong></h2>
                 </div>
 
                 <div className="border-[#dcdce9] rounded-xl bg-[#1B1D2F] p-4">
                     <h1 className="text-2xs font-bold text-emerald-600">RULES</h1>
                     <ol className="list-decimal list-inside space-y-1 text-sm">
-                        <li>When arriving find a senior to scan your QR code for attendance</li>
+                        <li>When arriving find a senior to check in</li>
                         <li>Before going anywhere, inform a senior</li>
                         <li>In an event of an emergency, find a senior for help</li>
                         <li>Call your seniors by the correct name or else</li>
                         <li>Be respectful to everyone</li>
                         <li>Don't make a mess</li>
-                        <li>Don't drink too much ;)</li>
+                        <li>Don't drink too much</li>
                     </ol>
                 </div>               
                 
                 <Link href="edit-info"><Button> Edit Info</Button></Link>
-
             </div>
         </main>
     );
