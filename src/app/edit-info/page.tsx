@@ -12,7 +12,7 @@ export default function EditInfoPage() {
     const [fullName, setFullName] = useState("");
     const [Nickname, setNickName] = useState("");
     const [ContactInfo, setContactInfo] = useState("");
-    const [selectedOption, setSelectedOption] = useState<"parents" | "other">("parents");
+    const [selectedOption, setSelectedOption] = useState<"parents" | "senior" | "other">("parents");
     const [addressText, setAddressText] = useState("");
     const [loading, setLoading] = useState(true);
     const [errorMessage, setError] = useState("");
@@ -21,7 +21,9 @@ export default function EditInfoPage() {
     let address;
     if (selectedOption === "parents") {
         address = "parents";
-    } else {
+    } else if (selectedOption === "senior"){
+        address = "senior"
+    }else {
         address = addressText;
     }
 
@@ -54,7 +56,11 @@ export default function EditInfoPage() {
             if (data.address === "parents") {
                 setSelectedOption("parents");
                 setAddressText("");
-            } else {
+            } else if(data.address === "senior"){
+                setSelectedOption("senior")
+                setAddressText("");
+            } 
+            else {
                 setSelectedOption("other");
                 setAddressText(data.address ?? "");
             }
@@ -173,6 +179,12 @@ export default function EditInfoPage() {
                             label="Parents"
                             checked={selectedOption === "parents"}
                             onChange={() => setSelectedOption("parents")}
+                        />
+
+                        <RadioOption
+                            label="Senior"
+                            checked={selectedOption === "senior"}
+                            onChange={() => setSelectedOption("senior")}
                         />
 
                         <RadioOption
