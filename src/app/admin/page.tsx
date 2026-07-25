@@ -5,6 +5,7 @@ import Link from "next/link";
 import Dropdown, {Option} from "@/components/ui/Dropdown";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
+import TextInput from "@/components/ui/TextInput";
 
 enum UserStatus {
     not_arrived = "not_arrived",
@@ -35,16 +36,24 @@ export default function AdminPage() {
     const [users, setUsers] = useState<User[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setError] = useState("");
+    const [searchName, setSearch] = useState("");
+
+    function searchNickname() {
+
+        if (!searchName.trim()) {
+            return users;
+        }
+
+        const query = searchName.toLowerCase();
+        return users.filter(user => 
+            user.nick_name.toLowerCase().includes(query)
+        );
+    }
 
     const handleLogout = () => {
         localStorage.clear();   
         router.push("../");
     }
-
-    const handleRefresh = () => {
-        router.refresh()
-    }
-    
     
     const options = [
         { label: "Not arrived", value: UserStatus.not_arrived, color: "red" },
@@ -56,9 +65,9 @@ export default function AdminPage() {
     const present = users.filter(user => user.status === UserStatus.in_party).length;
     const departed = users.filter(user => user.status === UserStatus.departed).length;
     const notArrived = users.filter(user => user.status === UserStatus.not_arrived).length;
+    const visibleUsers = searchNickname();
     
-    useEffect(() => {
-        async function fetchUserData() {    
+    async function fetchUserData() {    
         try {
             const token = localStorage.getItem("token");
             const response = await fetch('http://127.0.0.1:8000/admin/get_user', {
@@ -83,8 +92,14 @@ export default function AdminPage() {
             setIsLoading(false);
         }
     }
-    fetchUserData();
-}, []);
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+
+    const handleRefresh = () => {
+        fetchUserData();
+    }
 
 async function updateStatus(id: number, status: UserStatus) {
     try {
@@ -128,7 +143,7 @@ async function updateStatus(id: number, status: UserStatus) {
             <div className="flex flex-col w-full max-w-xl px-4 py-8 gap-3">
                 <div className="align-start">
                     <button className="mb-3 mr-5 text-gray-500 hover:text-white" onClick={handleLogout}>Logout</button>
-                    <button className="mb-3 text-gray-500 hover:text-white" onClick={() => router.refresh()}>refresh</button>
+                    <button className="mb-3 text-gray-500 hover:text-white" onClick={handleRefresh}>refresh</button>
                 </div>
                 <h1 className="mb-6 text-5xl font-bold">ADMIN</h1>
                 <div>
@@ -138,18 +153,19 @@ async function updateStatus(id: number, status: UserStatus) {
                     <p>Departed: <label className="italic text-violet-500">{departed}</label></p>
                 </div>
 
+                <TextInput label="" value={searchName} onChange={setSearch} placeholder="Search Nickname" />
                 <table className="w-full rounded-lg border border-gray-500 border-separate border-spacing-0 bg-[#1B1D2F] mt-6">
                     <thead className="border-b border-gray-500">
                     <tr className="">
                         <th className="p-2">#</th>
                         <th className="">Username</th>
-                        <th className="">Name</th>
+                        <th className="">Nickname</th>
                         <th className="">Status</th>
                     </tr>
                     </thead>
 
                     <tbody className="text-center">
-                        {users.map((user) =>
+                        {visibleUsers.map((user) =>
                             <tr key={user.id} className="border-b">
                                 <td className="p-2">{user.id-1}</td>
                                 <td>{user.user_name}</td>
