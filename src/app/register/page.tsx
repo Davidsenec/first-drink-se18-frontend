@@ -94,7 +94,7 @@ export default function RegisterPage() {
         <main className="flex justify-center px-6 py-12">
         <div className="w-full max-w-xl p-4 animate-card">
             <Link href="../"><button className="mb-3 text-gray-500 hover:text-white ">&#8592; Back</button></Link>
-            <h1 className="mb-6 text-5xl font-bold text-center animate-header">⚽ REGISTER</h1>
+            <h1 className="mb-6 text-5xl font-bold text-center animate-header">REGISTER</h1>
 
             <div className="flex flex-col gap-6">
                 <TextInput
