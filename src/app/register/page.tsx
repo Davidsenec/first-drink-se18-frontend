@@ -4,6 +4,7 @@ import { useState } from "react";
 import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
+import RadioOption from "@/components/ui/RadioOption";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
@@ -17,7 +18,7 @@ export default function RegisterPage() {
     const [full_name, setFullName] = useState("");
     const [nick_name, setNickName] = useState("");
     const [contact_info, setContactInfo] = useState("");
-    const [address, setAddress] = useState("parent");
+    const [address, setAddress] = useState("parents");
     const router = useRouter();
 
     
@@ -93,7 +94,7 @@ export default function RegisterPage() {
 
     return (
         <main className="flex justify-center px-6 py-12">
-        <div className="w-full max-w-xl p-4 animate-card">
+        <div className="w-full max-w-sm p-4 animate-card">
             <Link href="../"><button className="mb-3 text-gray-500 hover:text-white ">&#8592; Back</button></Link>
             <h1 className="mb-6 text-5xl font-bold text-center animate-header">REGISTER</h1>
 
@@ -139,7 +140,7 @@ export default function RegisterPage() {
                 />
 
                 <p>How are you going home?</p>
-                <label><input type="radio" name="source" value="parents" 
+                {/* <label><input type="radio" name="source" value="parents" 
                 onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Parents</label>
                 <label><input type="radio" name="source" value="senior" 
                 onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Senior</label>
@@ -152,7 +153,39 @@ export default function RegisterPage() {
                         value={address}
                         onChange={setAddress}
                     />
-                )}
+                )} */}
+                
+                <div>
+                    <div className="flex flex-col gap-3 mt-1">
+                        <RadioOption
+                            label="Parents"
+                            checked={selected === "parents"}
+                            onChange={() => {setSelectedOption("parents"); setAddress("parents");}}
+                        />
+                        <RadioOption
+                            label="Senior"
+                            checked={selected === "senior"}
+                            onChange={() => {setSelectedOption("senior"); setAddress("senior");}}
+                        />
+
+                        <RadioOption
+                            label="Other (Please include address in case of emergency)"
+                            checked={selected === "other"}
+                            onChange={() => setSelectedOption("other")}
+                        />
+                        </div>
+
+                        <div className="flex flex-col mt-2">
+                        {selected === "other" && (
+                            <TextInput
+                            label=""
+                            value={address}
+                            onChange={setAddress}
+                            placeholder="Emergency address"
+                            />
+                        )}
+                    </div>
+                </div>
 
                 <label className="flex items-center gap-3">
                     <input type="checkbox"/> 

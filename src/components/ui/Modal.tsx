@@ -36,7 +36,7 @@ export default function Modal({trigger, title, children,}: ModalProps) {
                     {children}
 
                     <div className="flex justify-end">
-                        <button onClick={closeModal} className="rounded bg-emerald-500 px-4 py-2">
+                        <button onClick={closeModal} className="cursor-pointer rounded bg-emerald-500 px-4 py-2">
                             Close
                         </button>
                     </div>

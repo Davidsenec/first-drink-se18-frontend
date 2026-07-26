@@ -28,6 +28,7 @@ type BackUser = {
 type User = {
     id: number;
     user_name: string;
+    full_name: string;
     contact_info: string;
     nick_name: string;
     address: string;
@@ -142,8 +143,8 @@ async function updateStatus(id: number, status: UserStatus) {
     );
 }
     return (
-        <main className="flex justify-center px-3 py-6">
-            <div className="flex flex-col w-full max-w-xl px-4 py-8 gap-3">
+        <main className="min-h-screen flex justify-center px-3 py-6">
+            <div className="flex flex-col mx-auto w-full max-w-lg px-4 py-8 gap-3">
                 <div className="align-start">
                     <button className="mb-3 mr-5 text-gray-500 hover:text-white" onClick={handleLogout}>Logout</button>
                     <button className="mb-3 text-gray-500 hover:text-white" onClick={handleRefresh}>refresh</button>
@@ -157,33 +158,41 @@ async function updateStatus(id: number, status: UserStatus) {
                 </div>
 
                 <TextInput label="" value={searchName} onChange={setSearch} placeholder="Search Nickname" />
-                <table className="w-full rounded-lg border border-gray-500 border-separate border-spacing-0 bg-[#1B1D2F] mt-6">
-                    <thead className="border-b border-gray-500">
-                    <tr className="">
-                        <th className="p-2">#</th>
-                        <th className="">Nickname</th>
-                        <th className="">Status</th>
-                        <th className="">ContactInfo</th>
-                        <th className="">Address</th>
-                    </tr>
-                    </thead>
+                <div className="w-full overflow-x-auto">
+                    <table className="w-full mt-5 min-w-105 table-fixed overflow-hidden rounded-lg border border-gray-500 bg-[#1B1D2F]">
+                        <thead>
+                        <tr className="border-b border-gray-700">
+                            <th className="w-10 p-2">#</th>
+                            <th className="w-1/3">Nickname</th>
+                            <th className="w-1/3">Status</th>
+                            <th className="w-10 p-2">Info</th>
+                        </tr>
+                        </thead>
 
-                    <tbody className="text-center">
-                        {visibleUsers.map((user) =>
-                            <tr key={user.id} className="border-b">
-                                <td className="p-4">{user.id-1}</td>
-                                <td className="p-2">{user.nick_name}</td>
-                                <td className="p-3"><Dropdown 
-                                    value={user.status} 
-                                    onChange={(value) => updateStatus(user.id, value as UserStatus)} 
-                                    options={options}>
-                                </Dropdown></td>
-                                <td className="p-2">{user.contact_info}</td>
-                                <td className="p-2">{user.address}</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                        <tbody>
+                            {visibleUsers.map((user) =>
+                                <tr key={user.id} className="border-b border-gray-700">
+                                    <td className="p-4 text-sm text-center">{user.id-1}</td>
+                                    <td className="p-2 text-sm text-center"><div className="whitespace-normal wrap-break-word">{user.nick_name}</div></td>
+                                    <td className="p-3 text-sm text-center"><Dropdown 
+                                        value={user.status} 
+                                        onChange={(value) => updateStatus(user.id, value as UserStatus)} 
+                                        options={options}>
+                                    </Dropdown></td>
+                                    {/* <td className="p-2">{user.contact_info}</td> */}
+                                    {/* <td className="p-2">{user.address}</td> */}
+                                    <td className="p-2"><Modal 
+                                        title="User Info"
+                                        trigger={<p className="cursor-pointer hover:text-emerald-500 rounded-full border text-center font-bold">i</p>}>
+                                        <p className="text-white">Full name: {user.full_name}</p>
+                                        <p className="text-white">Address: {user.address}</p>
+                                        <p className="text-white">Contact info: {user.contact_info}</p>
+                                    </Modal></td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     );
