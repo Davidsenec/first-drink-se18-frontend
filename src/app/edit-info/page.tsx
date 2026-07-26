@@ -9,9 +9,9 @@ import RadioOption from "@/components/ui/RadioOption";
 import Link from "next/link";
 
 export default function EditInfoPage() {
-    const [fullName, setFullName] = useState("");
-    const [Nickname, setNickName] = useState("");
-    const [ContactInfo, setContactInfo] = useState("");
+    const [full_name, setFullName] = useState("");
+    const [nick_name, setNickName] = useState("");
+    const [contact_info, setContactInfo] = useState("");
     const [selectedOption, setSelectedOption] = useState<"parents" | "senior" | "other">("parents");
     const [addressText, setAddressText] = useState("");
     const [loading, setLoading] = useState(true);
@@ -27,8 +27,11 @@ export default function EditInfoPage() {
         address = addressText;
     }
 
+
+
     useEffect(() => {
         async function fetchUser() {
+
             const token = localStorage.getItem("token");
 
             if (!token) {
@@ -82,9 +85,30 @@ export default function EditInfoPage() {
 
     const handleConfirm = async () => {
         if (selectedOption === "other" && addressText.trim() === "") {
-            alert("Please enter address!!!");
+            setError("Please enter address!!!");
             return;
-        } 
+        }
+        
+        if (full_name.length < 1 || full_name.length > 100) {
+            setError("Fullname must be 1-100 characters long");
+            return;
+        }
+
+        if (nick_name.length < 1 || nick_name.length > 50) {
+            setError("nickname must be 1-50 characters long");
+            return;
+        }
+
+        if (contact_info.length < 1 || contact_info.length >100) {
+            setError("contact info must be 1-100 characters long");
+            return;
+        }
+
+        if (address.length < 1 || address.length >255) {
+            setError("address must be 1-255 characters long");
+            return;
+        }
+
         setError("");
         const token = localStorage.getItem("token");
 
@@ -96,9 +120,9 @@ export default function EditInfoPage() {
                 Authorization: `Bearer ${token}`,
             },
                 body: JSON.stringify({
-                full_name: fullName,
-                nick_name: Nickname,
-                contact_info: ContactInfo,
+                full_name: full_name,
+                nick_name: nick_name,
+                contact_info: contact_info,
                 address,
             }),
         });
@@ -132,7 +156,7 @@ export default function EditInfoPage() {
             <div className="w-full max-w-md sm:max-w-lg md:max-w-xl mx-auto">
 
                 {/* Back button */}
-                <Link href="../" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+                <Link href="../info" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
                 <span className="text-lg"> ← </span>
                 <span>Back</span>
                 </Link>
@@ -148,21 +172,21 @@ export default function EditInfoPage() {
                     {/* Fullname */}
                     <TextInput
                         label="Fullname"
-                        value={fullName}
+                        value={full_name}
                         onChange={setFullName}
                     />
 
                     {/* Nickname */}
                     <TextInput
                         label="Nickname"
-                        value={Nickname}
+                        value={nick_name}
                         onChange={setNickName}
                     />
 
                     {/* Contact info */}
                     <TextInput
                         label="Contact Info"
-                        value={ContactInfo}
+                        value={contact_info}
                         onChange={setContactInfo}
                     />
                 </div>
@@ -188,7 +212,7 @@ export default function EditInfoPage() {
                         />
 
                         <RadioOption
-                            label="Other (Please include address incase of emergency)"
+                            label="Other (Please include address in case of emergency)"
                             checked={selectedOption === "other"}
                             onChange={() => setSelectedOption("other")}
                         />

@@ -22,13 +22,41 @@ export default function RegisterPage() {
     
     async function fetchRegister() {
 
+        const isValid = /^[a-zA-Z0-9_-]+$/.test(user_name);
+
         if (!user_name || !password || !full_name || !nick_name || !contact_info || !address) {
             setError("Please fill in all fields");
             return;
         }
 
-        if (password.length < 6 || password.length >= 16) {
-            setError("Password must be more than 5 and less than 17 characters long");
+        if (user_name.length < 3 || user_name.length >128 || !isValid) {
+            setError("Username must be 3-50 characters long (letters, numbers, `_`, `-` only)");
+            return;
+        }
+
+        if (password.length < 8 || password.length >128) {
+            setError("Password must be 8-128 characters long");
+            return;
+        }
+
+
+        if (full_name.length < 1 || full_name.length > 100) {
+            setError("Fullname must be 1-100 characters long");
+            return;
+        }
+
+        if (nick_name.length < 1 || nick_name.length > 50) {
+            setError("nickname must be 1-50 characters long");
+            return;
+        }
+
+        if (contact_info.length < 1 || contact_info.length >100) {
+            setError("contact info must be 1-100 characters long");
+            return;
+        }
+
+        if (address.length < 1 || address.length >255) {
+            setError("address must be 1-255 characters long");
             return;
         }
 
