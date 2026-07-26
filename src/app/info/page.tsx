@@ -50,7 +50,7 @@ export default function InfoPage() {
                     <hr className="text-gray-500 p-3"></hr>
                     <h1 className="text-xs font-bold text-emerald-600">CONTACT INFO</h1>
                     <h2>Discord: <Link href="https://discord.gg/N79Fp3hZZ" className="text-blue-500 text-sm">Click here!</Link></h2>
-                    <h2>Instagram: <Link href="https://www.instagram.com/se_kmitl?igsh=MWFuMW85MmVpMXBmag==" className="text-blue-500 text-sm">Click here!</Link> </h2>
+                    <h2>Instagram: <Link href="https://www.instagram.com/davidosenec/" className="text-blue-500 text-sm">Click here!</Link> or <Link href="https://www.instagram.com/tunerxd" className="text-blue-500 text-sm">Click here!</Link> </h2>
                     <h2>Outfit: Wear <strong>Football Jersey</strong> or any <strong>Jersey</strong></h2>
                 </div>
 
