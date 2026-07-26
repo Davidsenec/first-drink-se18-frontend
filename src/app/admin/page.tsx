@@ -28,6 +28,7 @@ type User = {
     id: number;
     user_name: string;
     nick_name: string;
+    address: string;
     status: UserStatus;
 };
 
@@ -160,6 +161,7 @@ async function updateStatus(id: number, status: UserStatus) {
                         <th className="p-2">#</th>
                         <th className="">Username</th>
                         <th className="">Nickname</th>
+                        <th className="">Address</th>
                         <th className="">Status</th>
                     </tr>
                     </thead>
@@ -170,6 +172,7 @@ async function updateStatus(id: number, status: UserStatus) {
                                 <td className="p-2">{user.id-1}</td>
                                 <td>{user.user_name}</td>
                                 <td>{user.nick_name}</td>
+                                <td>{user.address}</td>
                                 <td className="p-2"><Dropdown 
                                     value={user.status} 
                                     onChange={(value) => updateStatus(user.id, value as UserStatus)} 
