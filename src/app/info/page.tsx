@@ -33,7 +33,7 @@ export default function InfoPage() {
                 <div>
                     <button className="mb-3 text-gray-500 hover:text-white items-start" onClick={handleLogout}>Logout</button>
                 </div>
-                <h1 className="mb-6 text-5xl font-bold">Welcome, {user_name}</h1>
+                <h1 className="mb-6 text-5xl font-bold animate-header">Welcome, {user_name}</h1>
                 <Image
                     src={sui}
                     alt="Picture of the author"
@@ -41,7 +41,7 @@ export default function InfoPage() {
                     className="rounded-2xl"
                 />
 
-                <div className="border-[#dcdce9] rounded-xl bg-[#1B1D2F] p-4">
+                <div className="border-[#dcdce9] rounded-xl bg-[#1B1D2F] p-4 animate-card">
                     <h1 className="text-xs font-bold text-emerald-600">EVENT INFO</h1>
                     <h2>⏰ Monday, August 3 2026 · 19:00</h2>
                     <h3 className="">📍 Me Smile Cafe | Google maps: 
@@ -50,11 +50,11 @@ export default function InfoPage() {
                     <hr className="text-gray-500 p-3"></hr>
                     <h1 className="text-xs font-bold text-emerald-600">CONTACT INFO</h1>
                     <h2>Discord: <Link href="https://discord.gg/N79Fp3hZZ" className="text-blue-500 text-sm">Click here!</Link></h2>
-                    <h2>Instagram: <Link href="https://www.instagram.com/davidosenec/" className="text-blue-500 text-sm">Click here!</Link> or <Link href="https://www.instagram.com/tunerxd" className="text-blue-500 text-sm">Click here!</Link> </h2>
+                    <h2>Instagram: <Link href="https://www.instagram.com/se_kmitl?igsh=MWFuMW85MmVpMXBmag==" className="text-blue-500 text-sm link-underline">Click here!</Link> </h2>
                     <h2>Outfit: Wear <strong>Football Jersey</strong> or any <strong>Jersey</strong></h2>
                 </div>
 
-                <div className="border-[#dcdce9] rounded-xl bg-[#1B1D2F] p-4">
+                <div className="border-[#dcdce9] rounded-xl bg-[#1B1D2F] p-4 animate-card" style={{animationDelay: "0.1s"}}>
                     <h1 className="text-2xs font-bold text-emerald-600">RULES</h1>
                     <ol className="list-decimal list-inside space-y-1 text-sm">
                         <li>When arriving find a senior to check in</li>

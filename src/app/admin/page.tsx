@@ -170,11 +170,11 @@ async function updateStatus(id: number, status: UserStatus) {
                     <tbody className="text-center">
                         {visibleUsers.map((user) =>
                             <tr key={user.id} className="border-b">
-                                <td className="p-2">{user.id-1}</td>
-                                <td>{user.nick_name}</td>
-                                <td>{user.contact_info}</td>
-                                <td>{user.address}</td>
-                                <td className="p-2"><Dropdown 
+                                <td className="p-4">{user.id-1}</td>
+                                <td className="p-2">{user.nick_name}</td>
+                                <td className="p-2">{user.contact_info}</td>
+                                <td className="p-2">{user.address}</td>
+                                <td className="p-3"><Dropdown 
                                     value={user.status} 
                                     onChange={(value) => updateStatus(user.id, value as UserStatus)} 
                                     options={options}>

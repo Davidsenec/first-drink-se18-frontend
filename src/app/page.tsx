@@ -79,11 +79,11 @@ export default function Home() {
   
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center px-4 py-8">
-      <div className="w-full max-w-sm flex flex-col gap-4 items-center justify-center">
+      <div className="w-full max-w-sm flex flex-col gap-4 items-center justify-center animate-card">
 
         {/* Header */}
         <div className="flex flex-col text-center">
-          <p className="text-3xl">⚽</p>
+          <p className="text-3xl animate-bounce-in">⚽</p>
           <p className="text-[#5b6c82] text-[14px]">First Drink</p>
           <p className={`${emeraldText} text-[16px]`}>
             <strong>Software Engineering</strong>
@@ -110,7 +110,7 @@ export default function Home() {
             placeholder="Password"/>
 
           {error && (
-            <span className="text-red-400 text-center text-[14px]">{error}</span>
+            <span className="text-red-400 text-center text-[14px] animate-shake">{error}</span>
           )}
 
           <Button
@@ -122,7 +122,7 @@ export default function Home() {
 
         {/* Register page link text */}
         <p className={`${grayText} font-sans mt-2`}>
-          New here? <Link href="/register" className={`${emeraldText}`}>Sign up here</Link>
+          New here? <Link href="/register" className={`${emeraldText} link-underline`}>Sign up here</Link>
         </p>
 
       </div>

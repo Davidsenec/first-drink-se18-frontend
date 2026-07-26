@@ -162,12 +162,12 @@ export default function EditInfoPage() {
                 </Link>
 
                 {/* Header */}
-                <div className="flex items-center gap-4 mt-8 mb-10">
+                <div className="flex items-center gap-4 mt-8 mb-10 animate-header">
                     <span className="text-3xl">⚽</span>
                     <h1 className="text-5xl font-black tracking-tight">EDIT INFO</h1>
                 </div>
 
-                <div className="flex flex-col gap-4 mt-4">
+                <div className="flex flex-col gap-4 mt-4 animate-card">
 
                     {/* Fullname */}
                     <TextInput
@@ -233,7 +233,7 @@ export default function EditInfoPage() {
                 </div>
 
                 {errorMessage && (
-                    <p className="text-red-400 text-center text-[14px] mt-4">{errorMessage}</p>
+                    <p className="text-red-400 text-center text-[14px] mt-4 animate-shake">{errorMessage}</p>
                 )}
 
                 {/* Confirm button */}
