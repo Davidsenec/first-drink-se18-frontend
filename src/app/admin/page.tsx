@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Dropdown, {Option} from "@/components/ui/Dropdown";
 import Button from "@/components/ui/Button";
-import { useRouter } from "next/navigation";
 import TextInput from "@/components/ui/TextInput";
+import Modal from "@/components/ui/Modal";
 
 enum UserStatus {
     not_arrived = "not_arrived",
@@ -161,9 +162,9 @@ async function updateStatus(id: number, status: UserStatus) {
                     <tr className="">
                         <th className="p-2">#</th>
                         <th className="">Nickname</th>
+                        <th className="">Status</th>
                         <th className="">ContactInfo</th>
                         <th className="">Address</th>
-                        <th className="">Status</th>
                     </tr>
                     </thead>
 
@@ -172,13 +173,13 @@ async function updateStatus(id: number, status: UserStatus) {
                             <tr key={user.id} className="border-b">
                                 <td className="p-4">{user.id-1}</td>
                                 <td className="p-2">{user.nick_name}</td>
-                                <td className="p-2">{user.contact_info}</td>
-                                <td className="p-2">{user.address}</td>
                                 <td className="p-3"><Dropdown 
                                     value={user.status} 
                                     onChange={(value) => updateStatus(user.id, value as UserStatus)} 
                                     options={options}>
                                 </Dropdown></td>
+                                <td className="p-2">{user.contact_info}</td>
+                                <td className="p-2">{user.address}</td>
                             </tr>
                         )}
                     </tbody>

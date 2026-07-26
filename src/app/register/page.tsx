@@ -3,6 +3,7 @@
 import { useState } from "react";
 import TextInput from "@/components/ui/TextInput";
 import Button from "@/components/ui/Button";
+import Modal from "@/components/ui/Modal";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
@@ -99,7 +100,7 @@ export default function RegisterPage() {
             <div className="flex flex-col gap-6">
                 <TextInput
                     label="Username"
-                    placeholder="Example: 69011xx, Big D"
+                    placeholder="Ex.69011xx, Big D"
                     value={user_name}
                     onChange={setUsername}
                 />
@@ -131,8 +132,8 @@ export default function RegisterPage() {
                 />
 
                 <TextInput
-                    label="Contact info"
-                    placeholder="Please specify Ex: LineID: davidishandsome842."
+                    label="Contact info (Please specify)"
+                    placeholder="Ex.LineID:davidishandsome842"
                     value={contact_info}
                     onChange={setContactInfo}
                 />
@@ -154,8 +155,26 @@ export default function RegisterPage() {
                 )}
 
                 <label className="flex items-center gap-3">
-                    <input type="checkbox"/> I accept and understand the
-                    <Link href="" className="underline text-emerald-500 link-underline">rules</Link>
+                    <input type="checkbox"/> 
+                    {/* <Link href="" className="underline text-emerald-500 link-underline">rules</Link> */}
+                    <Modal
+                        title="Rules"
+                        trigger={
+                            <span className="cursor-pointer"> 
+                                I accept and understand the <label className="underline text-emerald-500">rules</label>
+                            </span>
+                        }
+                        >
+                        <ol className="list-decimal list-inside space-y-1 text-sm text-white">
+                            <li>When arriving find a senior to check in</li>
+                            <li>Before going anywhere, inform a senior</li>
+                            <li>In an event of an emergency, find a senior for help</li>
+                            <li>Call your seniors by the correct name or else</li>
+                            <li>Be respectful to everyone</li>
+                            <li>Don't make a mess</li>
+                            <li>Don't drink too much</li>
+                        </ol>
+                    </Modal>
                 </label>
 
                 {errorMessage && (
