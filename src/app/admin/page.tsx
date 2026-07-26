@@ -27,6 +27,7 @@ type BackUser = {
 type User = {
     id: number;
     user_name: string;
+    contact_info: string;
     nick_name: string;
     address: string;
     status: UserStatus;
@@ -159,8 +160,8 @@ async function updateStatus(id: number, status: UserStatus) {
                     <thead className="border-b border-gray-500">
                     <tr className="">
                         <th className="p-2">#</th>
-                        <th className="">Username</th>
                         <th className="">Nickname</th>
+                        <th className="">ContactInfo</th>
                         <th className="">Address</th>
                         <th className="">Status</th>
                     </tr>
@@ -170,8 +171,8 @@ async function updateStatus(id: number, status: UserStatus) {
                         {visibleUsers.map((user) =>
                             <tr key={user.id} className="border-b">
                                 <td className="p-2">{user.id-1}</td>
-                                <td>{user.user_name}</td>
                                 <td>{user.nick_name}</td>
+                                <td>{user.contact_info}</td>
                                 <td>{user.address}</td>
                                 <td className="p-2"><Dropdown 
                                     value={user.status} 
