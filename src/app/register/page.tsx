@@ -92,9 +92,9 @@ export default function RegisterPage() {
 
     return (
         <main className="flex justify-center px-6 py-12">
-        <div className="w-full max-w-xl p-4">
+        <div className="w-full max-w-xl p-4 animate-card">
             <Link href="../"><button className="mb-3 text-gray-500 hover:text-white ">&#8592; Back</button></Link>
-            <h1 className="mb-6 text-5xl font-bold text-center">⚽ REGISTER</h1>
+            <h1 className="mb-6 text-5xl font-bold text-center animate-header">⚽ REGISTER</h1>
 
             <div className="flex flex-col gap-6">
                 <TextInput
@@ -155,11 +155,11 @@ export default function RegisterPage() {
 
                 <label className="flex items-center gap-3">
                     <input type="checkbox"/> I accept and understand the
-                    <Link href="" className="underline text-emerald-500">rules</Link>
+                    <Link href="" className="underline text-emerald-500 link-underline">rules</Link>
                 </label>
 
                 {errorMessage && (
-                <span className="text-red-400 text-center text-[14px]">{errorMessage}</span>
+                <span className="text-red-400 text-center text-[14px] animate-shake">{errorMessage}</span>
                 )}
                 <Button
                     children="Register"
