@@ -74,7 +74,7 @@ export default function AdminPage() {
     async function fetchUserData() {    
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch('http://127.0.0.1:8000/admin/get_user', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/get_user`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                 },
@@ -126,7 +126,7 @@ export default function AdminPage() {
                 id,
                 status,
             });
-            const response = await fetch(`http://127.0.0.1:8000/admin/check_in/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/check_in/${id}`, {
                 method: "PUT",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -161,7 +161,7 @@ export default function AdminPage() {
         try {
             const token = localStorage.getItem("token");
             console.log(id);
-            const response = await fetch(`http://127.0.0.1:8000/admin/delete/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/delete/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`,
