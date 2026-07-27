@@ -19,6 +19,7 @@ export default function RegisterPage() {
     const [nick_name, setNickName] = useState("");
     const [contact_info, setContactInfo] = useState("");
     const [address, setAddress] = useState("parents");
+    const [acceptedRules, setAcceptedRules] = useState(false);
     const router = useRouter();
 
     
@@ -64,6 +65,10 @@ export default function RegisterPage() {
 
         if (password != confirmPassword) {
             setError("Password doesn't match");
+            return;
+        }
+        if (!acceptedRules) {
+            setError("You must accept the rules to register");
             return;
         }
 
@@ -188,7 +193,11 @@ export default function RegisterPage() {
                 </div>
 
                 <label className="flex items-center gap-3">
-                    <input type="checkbox"/> 
+                    <input 
+                        type="checkbox"
+                        checked={acceptedRules}
+                        onChange={(e) => setAcceptedRules(e.target.checked)}
+                    /> 
                     {/* <Link href="" className="underline text-emerald-500 link-underline">rules</Link> */}
                     <Modal
                         title="Rules"
