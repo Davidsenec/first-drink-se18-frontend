@@ -79,10 +79,24 @@ export default function AdminPage() {
                     "Authorization": `Bearer ${token}`,
                 },
             }); 
-            const data = await response.json();
-            
+
+            // const data = await response.json();
+            let data;
+            try {
+                data = await response.json();
+            } catch {
+                data = null;
+            }
             if (!response.ok) {
-                throw new Error(data.message || data.error || 'Something wrong');
+                if (response.status === 401) {
+                    handleLogout();
+                    return;
+                } else if (response.status === 403) {
+                    handleLogout();
+                    return;
+                } else {
+                    throw new Error(data.message || data.error || 'Something wrong');
+                }
             }
             
             setUsers(data);
@@ -105,43 +119,77 @@ export default function AdminPage() {
         fetchUserData();
     }
 
-async function updateStatus(id: number, status: UserStatus) {
-    try {
-        const token = localStorage.getItem("token");
-        console.log({
-            id,
-            status,
-        });
-        const response = await fetch(`http://127.0.0.1:8000/admin/check_in/${id}`, {
-            method: "PUT",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({status}),
-        });
+    async function updateStatus(id: number, status: UserStatus) {
+        try {
+            const token = localStorage.getItem("token");
+            console.log({
+                id,
+                status,
+            });
+            const response = await fetch(`http://127.0.0.1:8000/admin/check_in/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({status}),
+            });
 
-        if (!response.ok) {
-            console.log("Status:", response.status);
-            console.log("Status Text:", response.statusText);
+            if (!response.ok) {
+                console.log("Status:", response.status);
+                console.log("Status Text:", response.statusText);
 
-            const error = await response.json();
-            console.log(error);
-            throw new Error(`Failed to load users (${response.status})`);
+                const error = await response.json();
+                console.log(error);
+                throw new Error(`Failed to load users (${response.status})`);
+            }
+
+            router.refresh();
+        } catch(err) {
+            console.error(err);
         }
-
-        router.refresh();
-    } catch(err) {
-        console.error(err);
+        setUsers(
+            users.map(user =>
+                user.id === id
+                    ? { ...user, status }
+                    : user
+            )
+        );
     }
-    setUsers(
-        users.map(user =>
-            user.id === id
-                ? { ...user, status }
-                : user
-        )
-    );
-}
+
+    async function deleteUser(id: number){
+        try {
+            const token = localStorage.getItem("token");
+            console.log(id);
+            const response = await fetch(`http://127.0.0.1:8000/admin/delete/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+            
+            if (!response.ok) {
+                if (response.status === 404) {
+                    console.log("User not found");
+                    return;
+                } else if (response.status === 403) {
+                    console.log("Unauthorized");
+                    handleLogout();
+                    return;
+                } else if (response.status === 405) {
+                    console.log("Method not allowed");
+                    return;
+                } else {
+                    throw new Error('Something wrong');
+                }
+            }
+            
+            router.refresh();
+
+        } catch (err) {
+            console.error(err);
+        }
+    } 
     return (
         <main className="min-h-screen flex justify-center px-3 py-6">
             <div className="flex flex-col mx-auto w-full max-w-lg px-4 py-8 gap-3">
@@ -162,31 +210,41 @@ async function updateStatus(id: number, status: UserStatus) {
                     <table className="w-full mt-5 min-w-105 table-fixed overflow-hidden rounded-lg border border-gray-500 bg-[#1B1D2F]">
                         <thead>
                         <tr className="border-b border-gray-700">
-                            <th className="w-10 p-2">#</th>
+                            <th className="w-2 p-2">#</th>
                             <th className="w-1/3">Nickname</th>
                             <th className="w-1/3">Status</th>
-                            <th className="w-10 p-2">Info</th>
+                            <th className="w-7 p-2">Info</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                            {visibleUsers.map((user) =>
+                            {visibleUsers.map((user, index) =>
                                 <tr key={user.id} className="border-b border-gray-700">
-                                    <td className="p-4 text-sm text-center">{user.id-1}</td>
+                                    <td className="p-4 text-sm text-center">{index+1}</td>
                                     <td className="p-2 text-sm text-center"><div className="whitespace-normal wrap-break-word">{user.nick_name}</div></td>
                                     <td className="p-3 text-sm text-center"><Dropdown 
                                         value={user.status} 
                                         onChange={(value) => updateStatus(user.id, value as UserStatus)} 
                                         options={options}>
                                     </Dropdown></td>
-                                    {/* <td className="p-2">{user.contact_info}</td> */}
-                                    {/* <td className="p-2">{user.address}</td> */}
                                     <td className="p-2"><Modal 
                                         title="User Info"
                                         trigger={<p className="cursor-pointer hover:text-emerald-500 rounded-full border text-center font-bold">i</p>}>
-                                        <p className="text-white">Full name: {user.full_name}</p>
-                                        <p className="text-white">Address: {user.address}</p>
-                                        <p className="text-white">Contact info: {user.contact_info}</p>
+                                        <div className="">
+                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Full name: {user.full_name}</p>
+                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Address: {user.address}</p>
+                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Contact info: {user.contact_info}</p>
+                                            <button 
+                                                onClick={() => {
+                                                    const confirmed = window.confirm(`Delete ${user.nick_name}`);
+                                                    if (confirmed) {
+                                                        deleteUser(user.id);
+                                                    }
+                                                }}
+                                                className="p-2 mt-2 ml-2 rounded bg-red-500 hover:bg-red-800 text-white"
+                                            >
+                                                delete</button>
+                                        </div>
                                     </Modal></td>
                                 </tr>
                             )}
