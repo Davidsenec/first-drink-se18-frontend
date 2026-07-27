@@ -12,9 +12,10 @@ interface ModalProps {
     trigger: ReactElement;
     title: string;
     children: ReactNode;
+    actions?: (closeModal: () => void) => ReactNode;
 }
 
-export default function Modal({trigger, title, children,}: ModalProps) {
+export default function Modal({trigger, title, children, actions,}: ModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null);
 
     const openModal = () => dialogRef.current?.showModal();
@@ -36,6 +37,7 @@ export default function Modal({trigger, title, children,}: ModalProps) {
                     {children}
 
                     <div className="flex justify-end">
+                        {actions?.(closeModal)}
                         <button onClick={closeModal} className="cursor-pointer rounded bg-emerald-500 px-4 py-2">
                             Close
                         </button>

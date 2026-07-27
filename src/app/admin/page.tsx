@@ -185,7 +185,7 @@ export default function AdminPage() {
             }
             
             router.refresh();
-
+            setUsers((prev) => prev.filter((user) => user.id !== id));
         } catch (err) {
             console.error(err);
         }
@@ -229,21 +229,24 @@ export default function AdminPage() {
                                     </Dropdown></td>
                                     <td className="p-2"><Modal 
                                         title="User Info"
-                                        trigger={<p className="cursor-pointer hover:text-emerald-500 rounded-full border text-center font-bold">i</p>}>
-                                        <div className="">
-                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Full name: {user.full_name}</p>
-                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Address: {user.address}</p>
-                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Contact info: {user.contact_info}</p>
+                                        trigger={<p className="cursor-pointer hover:text-emerald-500 rounded-full border text-center font-bold">i</p>}
+                                        actions={(closeModal) => (
                                             <button 
                                                 onClick={() => {
                                                     const confirmed = window.confirm(`Delete ${user.nick_name}`);
                                                     if (confirmed) {
                                                         deleteUser(user.id);
+                                                        closeModal();
                                                     }
                                                 }}
-                                                className="p-2 mt-2 ml-2 rounded bg-red-500 hover:bg-red-800 text-white"
+                                                className="px-4 py-2 mr-5 rounded bg-red-500 hover:bg-red-800 text-white"
                                             >
                                                 delete</button>
+                                        )}>
+                                        <div className="">
+                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Full name: {user.full_name}</p>
+                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Address: {user.address}</p>
+                                            <p className="p-2 text-white whitespace-normal wrap-break-word">Contact info: {user.contact_info}</p>
                                         </div>
                                     </Modal></td>
                                 </tr>
