@@ -20,12 +20,19 @@ export default function InfoPage() {
     }
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            router.push("/");
+            return;
+        }
+
         const userName = localStorage.getItem("sub")
         if (localStorage.getItem("isAdmin") == "true") {
             router.push("../admin");
         }
         setUsername(userName || "my Junior");
-    })
+    },[router]);
 
     return (
         <main className="flex justify-center px-3 py-6">

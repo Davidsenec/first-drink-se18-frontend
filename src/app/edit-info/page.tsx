@@ -38,9 +38,13 @@ export default function EditInfoPage() {
             router.push("../");
             return;
             }
+            
+            if (localStorage.getItem("isAdmin") == "true") {
+                router.push("../admin");
+            }
 
             try {
-            const response = await fetch("http://127.0.0.1:8000/users/me", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
                 headers: {
                 Authorization: `Bearer ${token}`,
                 },
@@ -113,7 +117,7 @@ export default function EditInfoPage() {
         const token = localStorage.getItem("token");
 
         try {
-        const response = await fetch("http://127.0.0.1:8000/users/edit_info", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/edit_info`, {
                 method: "PUT",
                 headers: {
                 "Content-Type": "application/json",
