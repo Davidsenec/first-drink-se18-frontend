@@ -207,13 +207,7 @@ export default function EditInfoPage() {
                             label="Parents"
                             checked={selectedOption === "parents"}
                             onChange={() => setSelectedOption("parents")}
-                        />
-
-                        <RadioOption
-                            label="Senior"
-                            checked={selectedOption === "senior"}
-                            onChange={() => setSelectedOption("senior")}
-                        />
+                        /> 
 
                         <RadioOption
                             label="Other (Please include address in case of emergency)"
@@ -229,7 +223,7 @@ export default function EditInfoPage() {
                             label=""
                             value={addressText}
                             onChange={setAddressText}
-                            placeholder="Emergency address"
+                            placeholder="123, AJ Dorm, Building3"
                             />
                         )}
                         </div>

@@ -55,6 +55,12 @@ export default function InfoPage() {
                         <Link href="https://maps.app.goo.gl/JAwqHpXVpaZadCN19" className="text-blue-500"> Click here!</Link></h3>
                     <br></br>
                     <hr className="text-gray-500 p-3"></hr>
+                    <h1 className="text-sm font-bold text-emerald-600">IMPORTANT</h1>
+                    <h2 className="mb-3">If your Parents are picking you up, don't forget to give us one of their contacts just in case!</h2>
+                    <h2 className="mb-3">If you're going with one of OUR seniors in year 2 or some other way, please specify your address</h2>
+                    <h2>If you have any further questions, contact us</h2>
+                    <br></br>
+                    <hr className="text-gray-500 p-3"></hr>
                     <h1 className="text-xs font-bold text-emerald-600">CONTACT INFO</h1>
                     <h2>Discord: <Link href="https://discord.gg/N79Fp3hZZ" className="text-blue-500 text-sm">Click here!</Link></h2>
                     <h2>Instagram: <Link href="https://www.instagram.com/se_kmitl?igsh=MWFuMW85MmVpMXBmag==" className="text-blue-500 text-sm link-underline">Click here!</Link> </h2>
@@ -70,7 +76,7 @@ export default function InfoPage() {
                         <li>Call your seniors by the correct name or else</li>
                         <li>Be respectful to everyone</li>
                         <li>Don't make a mess</li>
-                        <li>Don't drink too much</li>
+                        <li>Don't drink too much ;)</li>
                     </ol>
                 </div>               
                 
