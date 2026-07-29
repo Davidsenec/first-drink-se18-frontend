@@ -138,27 +138,18 @@ export default function RegisterPage() {
                 />
 
                 <TextInput
-                    label="Contact info (Please specify)"
+                    label="Contact info (Please specify and INCLUDE your parent's if you're going with them)"
                     placeholder="Ex.LineID:davidishandsome842"
                     value={contact_info}
                     onChange={setContactInfo}
                 />
 
-                <p>How are you going home?</p>
-                {/* <label><input type="radio" name="source" value="parents" 
-                onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Parents</label>
-                <label><input type="radio" name="source" value="senior" 
-                onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Senior</label>
-                <label><input type="radio" name="source" value="other" 
-                onChange={(e) => setSelectedOption(e.target.value)} className="rounded border p-3"/> Other</label>
-                {selected == "other" && (
-                    <TextInput
-                        label =""
-                        placeholder="Please describe how"
-                        value={address}
-                        onChange={setAddress}
-                    />
-                )} */}
+                <h2>How are you going home?
+                    <p className="text-sm text-gray-400">
+                        If your parents are NOT picking you up, please specify how you are going home and include your address
+                        (Ex.Senior: 123, Building A, ABC road)
+                    </p>
+                </h2>
                 
                 <div>
                     <div className="flex flex-col gap-3 mt-1">
@@ -167,16 +158,15 @@ export default function RegisterPage() {
                             checked={selected === "parents"}
                             onChange={() => {setSelectedOption("parents"); setAddress("parents");}}
                         />
-                        <RadioOption
+                        {/* <RadioOption
                             label="Senior"
                             checked={selected === "senior"}
                             onChange={() => {setSelectedOption("senior"); setAddress("senior");}}
-                        />
-
+                        /> */}
                         <RadioOption
-                            label="Other (Please include address in case of emergency)"
+                            label="Other (Please include address)"
                             checked={selected === "other"}
-                            onChange={() => setSelectedOption("other")}
+                            onChange={() => {setSelectedOption("other"); setAddress("");}}
                         />
                         </div>
 
@@ -186,7 +176,7 @@ export default function RegisterPage() {
                             label=""
                             value={address}
                             onChange={setAddress}
-                            placeholder="Emergency address"
+                            placeholder="123, AJ Dorm, Building3"
                             />
                         )}
                     </div>
@@ -198,7 +188,6 @@ export default function RegisterPage() {
                         checked={acceptedRules}
                         onChange={(e) => setAcceptedRules(e.target.checked)}
                     /> 
-                    {/* <Link href="" className="underline text-emerald-500 link-underline">rules</Link> */}
                     <Modal
                         title="Rules"
                         trigger={
@@ -214,7 +203,7 @@ export default function RegisterPage() {
                             <li>Call your seniors by the correct name or else</li>
                             <li>Be respectful to everyone</li>
                             <li>Don't make a mess</li>
-                            <li>Don't drink too much</li>
+                            <li>Don't drink too much ;)</li>
                         </ol>
                     </Modal>
                 </label>
