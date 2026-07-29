@@ -74,6 +74,12 @@ export default function AdminPage() {
     async function fetchUserData() {    
         try {
             const token = localStorage.getItem("token");
+
+            if (!token) {
+                router.push("/");
+                return;
+            }
+
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/get_user`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
