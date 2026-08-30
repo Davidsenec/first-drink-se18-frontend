@@ -50,6 +50,12 @@ export default function EditInfoPage() {
                 },
             });
 
+            if (response.status === 401) {
+                localStorage.clear();
+                router.push("../");
+                return;
+            }
+
             const data = await response.json();
 
             if (!response.ok) {
@@ -130,6 +136,12 @@ export default function EditInfoPage() {
                 address,
             }),
         });
+        
+        if (response.status === 401) {
+            localStorage.clear();
+            router.push("../");
+            return;
+        }
 
         const data = await response.json();
 
